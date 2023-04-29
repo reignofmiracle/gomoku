@@ -1,6 +1,7 @@
 import unittest
 import sys
-sys.path.append('.')
+
+sys.path.append(".")
 
 
 class GameTest(unittest.TestCase):
@@ -12,10 +13,11 @@ class GameTest(unittest.TestCase):
         board = Board(19, 19)
         board.place_stone(Player.black, Point(2, 2))
         board.place_stone(Player.white, Point(1, 2))
+        board.place_stone(Player.black, Point(1, 1))
 
         game = Game(board)
         game.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

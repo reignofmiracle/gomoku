@@ -1,10 +1,8 @@
-
 import tkinter as tk
-import os
-from PIL import ImageTk, Image
 
 from gomoku.board import Board
-from gomoku.board_renderer import BoardRenderer
+from gomoku.board_view import BoardView
+from gomoku.domain import Player, Point
 
 
 class Game:
@@ -13,8 +11,13 @@ class Game:
 
         self.window = tk.Tk()
 
-        self.board_renderer = BoardRenderer(self.window)
-        self.board_renderer.render(self.board)
+        self.board_view = BoardView(self.window, self.selected)
+        self.board_view.update(self.board)
 
     def run(self):
         self.window.mainloop()
+
+    def selected(self, point: Point):
+        print(point.col, point.row)
+        self.board.place_stone(Player.black, point)
+        self.board_view.update(self.board)
