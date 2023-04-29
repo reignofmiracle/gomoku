@@ -64,6 +64,8 @@ class BoardRenderer:
         x = point.col * self.cw
         y = point.row * self.ch
         if player == Player.white:
+            self.canvas.create_image(x, y, image=self.shadow)
             self.canvas.create_image(x, y, image=self.white)
         else:
+            self.canvas.create_image(x, y, image=self.shadow)
             self.canvas.create_image(x, y, image=self.black)
