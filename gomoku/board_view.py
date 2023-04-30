@@ -19,13 +19,15 @@ class BoardView:
         self.cell_width = self.black.width()
         self.cell_height = self.black.height()
 
+        self.margin_selection = 20
+
     def selected(self, event):
         row = int(event.y / self.cell_height)
         if event.y % self.cell_height > self.cell_height * 0.5:
             row += 1
 
-        row_min = row * self.cell_height - 10
-        row_max = row * self.cell_height + 10
+        row_min = row * self.cell_height - self.margin_selection
+        row_max = row * self.cell_height + self.margin_selection
         if event.y < row_min or event.y > row_max:
             return
 
@@ -33,8 +35,8 @@ class BoardView:
         if event.x % self.cell_width > self.cell_width * 0.5:
             col += 1
 
-        col_min = col * self.cell_width - 10
-        col_max = col * self.cell_width + 10
+        col_min = col * self.cell_width - self.margin_selection
+        col_max = col * self.cell_width + self.margin_selection
         if event.x < col_min or event.x > col_max:
             return
 
@@ -43,7 +45,6 @@ class BoardView:
     def update(self, board: Board):
         self.render_board(board)
         self.render_stones(board)
-        self.window.update()
 
     def render_board(self, board: Board):
         window_width = (board.num_cols + 3) * self.cell_width
@@ -54,6 +55,8 @@ class BoardView:
         canvas_width = (board.num_cols + 1) * self.cell_width
         canvas_height = (board.num_rows + 1) * self.cell_height
 
+        if self.canvas:
+            self.canvas.destroy()
         self.canvas = tk.Canvas(
             self.window, width=canvas_width, height=canvas_height, background="gray"
         )

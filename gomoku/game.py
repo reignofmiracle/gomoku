@@ -19,5 +19,8 @@ class Game:
 
     def selected(self, point: Point):
         print(point.col, point.row)
-        self.board.place_stone(Player.black, point)
+        if len(self.board._grid) % 2 == 0:
+            self.board.place_stone(Player.black, point)
+        else:
+            self.board.place_stone(Player.white, point)
         self.board_view.update(self.board)
