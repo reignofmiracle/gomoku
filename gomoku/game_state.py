@@ -5,8 +5,9 @@ from gomoku.move import Move
 from gomoku.scoring import GameResult
 
 
+
 class GameState:
-    def __init__(self, board: Board, next_player: Player, previous, move):
+    def __init__(self, board: Board, next_player: Player, previous, move: Move):
         self.board = board
         self.next_player = next_player
         self.previous_state = previous
@@ -34,36 +35,16 @@ class GameState:
         board = Board(*board_size)
         return GameState(board, Player.black, None, None)
 
-    def is_move_self_capture(self, player, move):
-        if not move.is_play:
-            return False
-        next_board = copy.deepcopy(self.board)
-        next_board.place_stone(player, move.point)
-        new_string = next_board.get_go_string(move.point)
-        return new_string.num_liberties == 0
-
     @property
     def situation(self):
         return (self.next_player, self.board)
-
-    def does_move_violate_ko(self, player, move):
-        if not move.is_play:
-            return False
-        next_board = copy.deepcopy(self.board)
-        next_board.place_stone(player, move.point)
-        next_situation = (player.other, next_board.zobrist_hash())
-        return next_situation in self.previous_states
 
     def is_valid_move(self, move):
         if self.is_over():
             return False
         if move.is_pass or move.is_resign:
             return True
-        return (
-            self.board.get(move.point) is None
-            and not self.is_move_self_capture(self.next_player, move)
-            and not self.does_move_violate_ko(self.next_player, move)
-        )
+        return self.board.get(move.point) is None
 
     def is_over(self):
         if self.last_move is None:
