@@ -1,3 +1,4 @@
+from gomoku.domain import Player, Point
 import gomoku.zobrist as zobrist
 
 
@@ -11,7 +12,7 @@ class Board:
     def is_on_grid(self, point) -> bool:
         return 1 <= point.row <= self.num_rows and 1 <= point.col <= self.num_cols
 
-    def place_stone(self, player, point):
+    def place_stone(self, player: Player, point: Point):
         assert self.is_on_grid(point)
         if self._grid.get(point) is not None:
             print('Illegal play on %s' % str(point))

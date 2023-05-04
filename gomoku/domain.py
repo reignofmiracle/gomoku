@@ -19,3 +19,27 @@ class Point(namedtuple('Point', 'row, col')):
             Point(self.row, self.col - 1),
             Point(self.row, self.col + 1),
         ]
+
+    def left(self):
+        return Point(self.row, self.col - 1)
+
+    def right(self):
+        return Point(self.row, self.col + 1)
+
+    def up(self):
+        return Point(self.row + 1, self.col)
+
+    def down(self):
+        return Point(self.row - 1, self.col)
+
+    def lt(self):
+        return Point(self.row + 1, self.col - 1)
+
+    def rt(self):
+        return Point(self.row + 1, self.col + 1)
+
+    def lb(self):
+        return Point(self.row - 1, self.col - 1)
+
+    def rb(self):
+        return Point(self.row - 1, self.col + 1)

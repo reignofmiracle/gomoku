@@ -5,7 +5,6 @@ from gomoku.move import Move
 from gomoku.scoring import GameResult
 
 
-
 class GameState:
     def __init__(self, board: Board, next_player: Player, previous, move: Move):
         self.board = board
@@ -44,7 +43,7 @@ class GameState:
             return False
         if move.is_pass or move.is_resign:
             return True
-        return self.board.get(move.point) is None
+        return self.board.get(move.point) is None and not self.is_3_3(self.next_player, move)
 
     def is_over(self):
         if self.last_move is None:
@@ -55,6 +54,26 @@ class GameState:
         if second_last_move is None:
             return False
         return self.last_move.is_pass and second_last_move.is_pass
+
+    def is_3_3(self, player: Player, move: Move):
+        if not move.is_play:
+            return False
+
+        count = 0
+
+        if self.board.get(move.point.left()) == player and self.board.get(move.point.right()) == player:
+            count += 1
+
+        if self.board.get(move.point.up()) == player and self.board.get(move.point.down()) == player:
+            count += 1
+
+        if self.board.get(move.point.lt()) == player and self.board.get(move.point.rb()) == player:
+            count += 1
+
+        if self.board.get(move.point.lb()) == player and self.board.get(move.point.rt()) == player:
+            count += 1
+
+        return count > 1
 
     def legal_moves(self):
         moves = []
