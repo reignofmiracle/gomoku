@@ -1,9 +1,12 @@
+import random
+
 from gomoku.domain import Player
 from gomoku.game_state import GameState
+from gomoku.move import Move
 
 
 class MCTSNode(object):
-    def __init__(self, game_state: GameState, parent=None, move=None):
+    def __init__(self, game_state: GameState, parent=None, move: Move = None):
         self.game_state = game_state
         self.parent = parent
         self.move = move
@@ -16,10 +19,16 @@ class MCTSNode(object):
         self.unvisited_moves = game_state.legal_moves()
 
     def add_child(self):
-        pass
+        index = random.randint(0, len(self.unvisited_moves) - 1)
+        new_move = self.unvisited_moves.pop(index)
+        new_game_state = self.game_state.apply_move(new_move)
+        new_node = MCTSNode(new_game_state, self, new_move)
+        self.children.append(new_node)
+        return new_node
 
-    def record_win(self, winner):
-        pass
+    def record_win(self, winner: Player):
+        self.win_counts[winner] += 1
+        self.num_rollouts += 1
 
     def can_add_child(self):
         return len(self.unvisited_moves) > 0
