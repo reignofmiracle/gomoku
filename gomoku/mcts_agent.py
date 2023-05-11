@@ -1,6 +1,7 @@
 import math
 from gomoku.agent import Agent
 from gomoku.domain import Player
+from gomoku.game_state import GameState
 from gomoku.mcts_node import MCTSNode
 from gomoku.r_bot import R_Bot
 
@@ -11,7 +12,7 @@ class MCTSAgent(Agent):
         self.num_rounds = num_rounds
         self.temperature = temperature
 
-    def select_move(self, game_state):
+    def select_move(self, game_state: GameState):
         root = MCTSNode(game_state)
         for i in range(self.num_rounds):
             node = root
@@ -65,7 +66,7 @@ class MCTSAgent(Agent):
         return best_child
 
     @staticmethod
-    def simulate_random_game(game):
+    def simulate_random_game(game: GameState):
         bots = {
             Player.black: R_Bot(),
             Player.white: R_Bot(),

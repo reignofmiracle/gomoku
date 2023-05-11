@@ -12,7 +12,7 @@ class Board:
     def is_on_grid(self, point) -> bool:
         return 1 <= point.row <= self.num_rows and 1 <= point.col <= self.num_cols
 
-    def place_stone(self, player: Player, point: Point):
+    def place_stone(self, player: Player, point: Point) -> None:
         assert self.is_on_grid(point)
         if self._grid.get(point) is not None:
             print('Illegal play on %s' % str(point))
@@ -21,5 +21,8 @@ class Board:
         self._grid[point] = player
         self._hash ^= zobrist.HASH_CODE[point, player]  # <3>
 
-    def get(self, point):        
-        return self._grid.get(point)        
+    def get(self, point) -> Player:
+        return self._grid.get(point)
+
+    def zobrist_hash(self) -> int:
+        return self._hash
