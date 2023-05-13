@@ -2,7 +2,7 @@ import copy
 from gomoku.board import Board
 from gomoku.domain import Player, Point
 from gomoku.move import Move
-from gomoku.scoring import GameResult
+from gomoku.game_result import GameResult
 
 
 class GameState:

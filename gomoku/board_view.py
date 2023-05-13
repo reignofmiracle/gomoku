@@ -88,7 +88,8 @@ class BoardView:
         # 인덱스 전시
         for col in range(0, board.num_cols):
             label = tk.Label(
-                self.window, text=string.ascii_uppercase[col], font=("Arial", 12)
+                self.window, text=string.ascii_uppercase[col], font=(
+                    "Arial", 12)
             )
             label.place(
                 x=((col + 1) * self.cell_width + self.cell_width * 0.75),
@@ -96,7 +97,8 @@ class BoardView:
             )
 
         for row in range(0, board.num_rows):
-            label = tk.Label(self.window, text=str(row + 1), font=("Arial", 12))
+            label = tk.Label(self.window, text=str(
+                row + 1), font=("Arial", 12))
             label.place(
                 x=(self.cell_width * 0.5),
                 y=((row + 1) * self.cell_height + self.cell_height * 0.75),
