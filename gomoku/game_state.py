@@ -1,4 +1,5 @@
 import copy
+from typing import List
 from gomoku.board import Board
 from gomoku.domain import Player, Point
 from gomoku.move import Move
@@ -46,6 +47,8 @@ class GameState:
         return self.board.get(move.point) is None and not self.is_3_3(self.next_player, move)
 
     def is_over(self):
+        if GameResult.find_5(self.board) is not None:
+            return True
         if self.last_move is None:
             return False
         if self.last_move.is_resign:
@@ -61,21 +64,39 @@ class GameState:
 
         count = 0
 
-        if self.board.get(move.point.left()) == player and self.board.get(move.point.right()) == player:
+        if self.count(player, move,
+                      1, 0) + self.count(player, move, -1, 0) == 2:
             count += 1
 
-        if self.board.get(move.point.up()) == player and self.board.get(move.point.down()) == player:
+        if self.count(player, move,
+                      0, 1) + self.count(player, move, 0, -1) == 2:
             count += 1
 
-        if self.board.get(move.point.lt()) == player and self.board.get(move.point.rb()) == player:
+        if self.count(player, move,
+                      -1, -1) + self.count(player, move, 1, 1) == 2:
             count += 1
 
-        if self.board.get(move.point.lb()) == player and self.board.get(move.point.rt()) == player:
+        if self.count(player, move,
+                      1, -1) + self.count(player, move, -1, 1) == 2:
             count += 1
 
         return count > 1
 
-    def legal_moves(self):
+    def count(self, player: Player, move: Move, d_row: int, d_col: int):
+        count = 0
+
+        point = Point(move.point.row + d_row, move.point.col + d_col)
+        while self.board.is_on_grid(point):
+            if player != self.board.get(point):
+                break
+
+            count += 1
+
+            point = Point(point.row + d_row, point.col + d_col)
+
+        return count
+
+    def legal_moves(self) -> List[Move]:
         moves = []
         for row in range(1, self.board.num_rows + 1):
             for col in range(1, self.board.num_cols + 1):

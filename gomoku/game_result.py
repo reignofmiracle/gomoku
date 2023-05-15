@@ -18,7 +18,7 @@ class GameResult:
         for row in range(board.num_rows):
             for col in range(board.num_cols):
                 point = Point(row + 1, col + 1)
-                if GameResult.has_5(point):
+                if GameResult.has_5(board, point):
                     return board.get(point)
 
         return None
