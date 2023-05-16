@@ -8,6 +8,7 @@ class Board:
         self.num_cols = num_cols
         self._grid = {}
         self._hash = zobrist.EMPTY_BOARD
+        self.count = self.num_rows * self.num_cols
 
     def is_on_grid(self, point) -> bool:
         return 1 <= point.row <= self.num_rows and 1 <= point.col <= self.num_cols
@@ -19,10 +20,14 @@ class Board:
         assert self._grid.get(point) is None
 
         self._grid[point] = player
-        self._hash ^= zobrist.HASH_CODE[point, player]  # <3>
+        self._hash ^= zobrist.HASH_CODE[point, player]
+        self.count -= 1
 
     def get(self, point) -> Player:
         return self._grid.get(point)
 
     def zobrist_hash(self) -> int:
         return self._hash
+
+    def is_full(self):
+        return self.count == 0

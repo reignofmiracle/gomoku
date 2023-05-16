@@ -5,7 +5,6 @@ sys.path.append('.')
 
 
 class RBotTest(unittest.TestCase):
-
     def test_select_move(self):
         from gomoku.board import Board
         from gomoku.domain import Point
@@ -13,16 +12,11 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Player
         from gomoku.r_bot import R_Bot
 
-        board = Board(10, 10)
-        board.place_stone(Player.black, Point(1, 5))
-        board.place_stone(Player.black, Point(2, 5))
-        board.place_stone(Player.black, Point(3, 5))
-        board.place_stone(Player.black, Point(4, 5))
+        game_state = GameState(Board(10, 10), Player.black, None, None)
 
-        game_state = GameState(board, Player.black, None, None)
-
-        found = R_Bot.find_5_move(game_state, Player.black)
-        self.assertIsNotNone(found)
+        r_bot = R_Bot()
+        select_move = r_bot.select_move(game_state)
+        print(select_move)
 
     def test_find_5_move_1(self):
         from gomoku.board import Board

@@ -20,12 +20,9 @@ class GameState:
             )
         self.last_move = move
 
-    def apply_move(self, move):
-        if move.is_play:
-            next_board = copy.deepcopy(self.board)
-            next_board.place_stone(self.next_player, move.point)
-        else:
-            next_board = self.board
+    def apply_move(self, move: Move):
+        next_board = copy.deepcopy(self.board)
+        next_board.place_stone(self.next_player, move.point)
         return GameState(next_board, self.next_player.other, self, move)
 
     @classmethod
@@ -42,8 +39,6 @@ class GameState:
     def is_valid_move(self, move):
         if self.is_over():
             return False
-        if move.is_pass or move.is_resign:
-            return True
         return self.board.get(move.point) is None and not self.is_3_3(self.next_player, move)
 
     def is_over(self):
@@ -51,17 +46,10 @@ class GameState:
             return True
         if self.last_move is None:
             return False
-        if self.last_move.is_resign:
-            return True
-        second_last_move = self.previous_state.last_move
-        if second_last_move is None:
-            return False
-        return self.last_move.is_pass and second_last_move.is_pass
+
+        return self.board.is_full()
 
     def is_3_3(self, player: Player, move: Move):
-        if not move.is_play:
-            return False
-
         count = 0
 
         if self.count(player, move,
@@ -104,14 +92,7 @@ class GameState:
                 if self.is_valid_move(move):
                     moves.append(move)
 
-        moves.append(Move.pass_turn())
-        moves.append(Move.resign())
-
         return moves
 
     def winner(self):
-        if not self.is_over():
-            return None
-        if self.last_move.is_resign:
-            return self.next_player
         return GameResult.compute(self)

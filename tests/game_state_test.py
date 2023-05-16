@@ -5,6 +5,32 @@ sys.path.append(".")
 
 
 class GameStateTest(unittest.TestCase):
+    def test_is_over_1(self):
+        from gomoku.board import Board
+        from gomoku.domain import Player, Point
+        from gomoku.game_state import GameState
+
+        board = Board(5, 5)
+        game_state = GameState(board, Player.black, None, None)
+
+        board.place_stone(Player.black, Point(1, 1))
+        board.place_stone(Player.black, Point(1, 2))
+        board.place_stone(Player.black, Point(1, 3))
+        board.place_stone(Player.black, Point(1, 4))
+        board.place_stone(Player.black, Point(1, 5))
+        self.assertTrue(game_state.is_over())
+
+    def test_is_over_2(self):
+        from gomoku.board import Board
+        from gomoku.domain import Player, Point
+        from gomoku.game_state import GameState
+        from gomoku.move import Move
+
+        board = Board(1, 1)
+        game_state = GameState(board, Player.black, None, None)
+        game_state = game_state.apply_move(Move.play(Point(1, 1)))
+        self.assertTrue(game_state.is_over())
+
     def test_cross1(self):
         from gomoku.board import Board
         from gomoku.domain import Player, Point

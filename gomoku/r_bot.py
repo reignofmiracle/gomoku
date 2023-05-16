@@ -1,3 +1,6 @@
+import random
+
+
 from gomoku.agent import Agent
 from gomoku.board import Board
 from gomoku.domain import Player, Point
@@ -10,8 +13,6 @@ class R_Bot(Agent):
         Agent.__init__(self)
 
     def select_move(self, game_state: GameState):
-        legal_moves = game_state.legal_moves()
-
         # 나의 5 완성
         found = R_Bot.find_5_move(game_state, game_state.next_player)
         if found is not None:
@@ -22,7 +23,11 @@ class R_Bot(Agent):
         if found is not None:
             return found
 
-        return Move.pass_turn()
+        legal_moves = game_state.legal_moves()
+        if len(legal_moves) == 0:
+            return None
+
+        return random.choice(legal_moves)
 
     @staticmethod
     def find_5_move(game_state: GameState, player: Player) -> (Move | None):

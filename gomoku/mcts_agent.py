@@ -66,14 +66,17 @@ class MCTSAgent(Agent):
         return best_child
 
     @staticmethod
-    def simulate_random_game(game: GameState):
+    def simulate_random_game(game_state: GameState):
         bots = {
             Player.black: R_Bot(),
             Player.white: R_Bot(),
         }
 
-        while not game.is_over():
-            bot_move = bots[game.next_player].select_move(game)
-            game = game.apply_move(bot_move)
+        while not game_state.is_over():
+            bot_move = bots[game_state.next_player].select_move(game_state)
+            if bot_move is None:
+                break
 
-        return game.winner()
+            game_state = game_state.apply_move(bot_move)
+
+        return game_state.winner()
