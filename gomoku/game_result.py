@@ -54,6 +54,9 @@ class GameResult:
             elif player != board.get(point):
                 break
 
+            if player is None:
+                break
+
             count += 1
 
             point = Point(point.row + d_row, point.col + d_col)

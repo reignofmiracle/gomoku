@@ -30,8 +30,8 @@ class MCTSAgentTest(unittest.TestCase):
             
             game_state = game_state.apply_move(bot_move)
 
-        test = Game(game_state.board)
-        test.run()
+        # test = Game(game_state.board)
+        # test.run()
 
 
 if __name__ == '__main__':
