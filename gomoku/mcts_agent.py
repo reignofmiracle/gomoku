@@ -4,15 +4,16 @@ from gomoku.domain import Player
 from gomoku.game_state import GameState
 from gomoku.mcts_node import MCTSNode
 from gomoku.mcts_bot import MCTSBot
+from gomoku.move import Move
 
 
 class MCTSAgent(Agent):
-    def __init__(self, num_rounds, temperature):
+    def __init__(self, num_rounds: int, temperature: float):
         Agent.__init__(self)
         self.num_rounds = num_rounds
         self.temperature = temperature
 
-    def select_move(self, game_state: GameState):
+    def select_move(self, game_state: GameState) -> Move:
         root = MCTSNode(game_state)
         for i in range(self.num_rounds):
             node = root
@@ -20,9 +21,11 @@ class MCTSAgent(Agent):
                 node = self.select_child(node)
 
             if node.can_add_child():
-                node = node.add_random_child()
+                node = node.add_child()
 
             winner = self.simulate_random_game(node.game_state)
+            if winner is None:
+                continue
 
             while node is not None:
                 node.record_win(winner)
@@ -47,7 +50,7 @@ class MCTSAgent(Agent):
         print('Select move %s with win pct %.3f' % (best_move, best_pct))
         return best_move
 
-    def select_child(self, node):
+    def select_child(self, node) -> MCTSNode:
         total_rollouts = sum(child.num_rollouts for child in node.children)
         log_rollouts = math.log(total_rollouts)
 
@@ -63,7 +66,7 @@ class MCTSAgent(Agent):
         return best_child
 
     @staticmethod
-    def simulate_random_game(game_state: GameState):
+    def simulate_random_game(game_state: GameState) -> Player:
         bots = {
             Player.black: MCTSBot(),
             Player.white: MCTSBot(),
