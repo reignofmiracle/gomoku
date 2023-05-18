@@ -10,11 +10,11 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Point
         from gomoku.game_state import GameState
         from gomoku.domain import Player
-        from gomoku.r_bot import R_Bot
+        from gomoku.mcts_bot import MCTSBot
 
         game_state = GameState(Board(10, 10), Player.black, None, None)
 
-        r_bot = R_Bot()
+        r_bot = MCTSBot()
         select_move = r_bot.select_move(game_state)
         print(select_move)
 
@@ -23,7 +23,7 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Point
         from gomoku.game_state import GameState
         from gomoku.domain import Player
-        from gomoku.r_bot import R_Bot
+        from gomoku.mcts_bot import MCTSBot
 
         board = Board(10, 10)
         board.place_stone(Player.black, Point(1, 5))
@@ -33,7 +33,7 @@ class RBotTest(unittest.TestCase):
 
         game_state = GameState(board, Player.black, None, None)
 
-        found = R_Bot.find_5_move(game_state, Player.black)
+        found = MCTSBot.find_5_move(game_state, Player.black)
         self.assertIsNotNone(found)
 
     def test_find_5_move_2(self):
@@ -41,7 +41,7 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Point
         from gomoku.game_state import GameState
         from gomoku.domain import Player
-        from gomoku.r_bot import R_Bot
+        from gomoku.mcts_bot import MCTSBot
 
         board = Board(10, 10)
 
@@ -52,7 +52,7 @@ class RBotTest(unittest.TestCase):
 
         game_state = GameState(board, Player.black, None, None)
 
-        found = R_Bot.find_5_move(game_state, Player.black)
+        found = MCTSBot.find_5_move(game_state, Player.black)
         self.assertIsNotNone(found)
 
     def test_find_5_move_3(self):
@@ -60,7 +60,7 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Point
         from gomoku.game_state import GameState
         from gomoku.domain import Player
-        from gomoku.r_bot import R_Bot
+        from gomoku.mcts_bot import MCTSBot
 
         board = Board(10, 10)
 
@@ -71,7 +71,7 @@ class RBotTest(unittest.TestCase):
 
         game_state = GameState(board, Player.black, None, None)
 
-        found = R_Bot.find_5_move(game_state, Player.black)
+        found = MCTSBot.find_5_move(game_state, Player.black)
         self.assertIsNotNone(found)
 
     def test_find_5_move_4(self):
@@ -79,7 +79,7 @@ class RBotTest(unittest.TestCase):
         from gomoku.domain import Point
         from gomoku.game_state import GameState
         from gomoku.domain import Player
-        from gomoku.r_bot import R_Bot
+        from gomoku.mcts_bot import MCTSBot
 
         board = Board(10, 10)
 
@@ -90,7 +90,7 @@ class RBotTest(unittest.TestCase):
 
         game_state = GameState(board, Player.black, None, None)
 
-        found = R_Bot.find_5_move(game_state, Player.black)
+        found = MCTSBot.find_5_move(game_state, Player.black)
         self.assertIsNotNone(found)
 
 

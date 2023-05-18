@@ -3,7 +3,7 @@ from gomoku.agent import Agent
 from gomoku.domain import Player
 from gomoku.game_state import GameState
 from gomoku.mcts_node import MCTSNode
-from gomoku.r_bot import R_Bot
+from gomoku.mcts_bot import MCTSBot
 
 
 class MCTSAgent(Agent):
@@ -19,14 +19,11 @@ class MCTSAgent(Agent):
             while (not node.can_add_child()) and (not node.is_terminal()):
                 node = self.select_child(node)
 
-            # Add a new child node into the tree.
             if node.can_add_child():
                 node = node.add_random_child()
 
-            # Simulate a random game from this node.
             winner = self.simulate_random_game(node.game_state)
 
-            # Propagate scores back up the tree.
             while node is not None:
                 node.record_win(winner)
                 node = node.parent
@@ -68,8 +65,8 @@ class MCTSAgent(Agent):
     @staticmethod
     def simulate_random_game(game_state: GameState):
         bots = {
-            Player.black: R_Bot(),
-            Player.white: R_Bot(),
+            Player.black: MCTSBot(),
+            Player.white: MCTSBot(),
         }
 
         while not game_state.is_over():

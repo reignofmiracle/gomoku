@@ -3,7 +3,6 @@ from typing import List
 from gomoku.board import Board
 from gomoku.domain import Player, Point
 from gomoku.move import Move
-from gomoku.game_result import GameResult
 
 
 class GameState:
@@ -42,7 +41,7 @@ class GameState:
         return self.board.get(move.point) is None and not self.is_3_3(self.next_player, move)
 
     def is_over(self):
-        if GameResult.find_5(self.board) is not None:
+        if self.board.found_5 is not None:
             return True
         if self.last_move is None:
             return False
@@ -94,5 +93,5 @@ class GameState:
 
         return moves
 
-    def winner(self):
-        return GameResult.compute(self)
+    def winner(self) -> Player | None:
+        return self.board.found_5

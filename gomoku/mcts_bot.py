@@ -8,18 +8,18 @@ from gomoku.game_state import GameState
 from gomoku.move import Move
 
 
-class R_Bot(Agent):
+class MCTSBot(Agent):
     def __init__(self):
         Agent.__init__(self)
 
     def select_move(self, game_state: GameState):
         # 나의 5 완성
-        found = R_Bot.find_5_move(game_state, game_state.next_player)
+        found = MCTSBot.find_5_move(game_state, game_state.next_player)
         if found is not None:
             return found
 
         # 상대 5 완성 저지
-        found = R_Bot.find_5_move(game_state, game_state.next_player.other)
+        found = MCTSBot.find_5_move(game_state, game_state.next_player.other)
         if found is not None:
             return found
 
@@ -30,29 +30,29 @@ class R_Bot(Agent):
         return random.choice(legal_moves)
 
     @staticmethod
-    def find_5_move(game_state: GameState, player: Player) -> (Move | None):
+    def find_5_move(game_state: GameState, player: Player) -> Move | None:
         for move in game_state.legal_moves():
-            if R_Bot.has_4(game_state.board, player, move.point):
+            if MCTSBot.has_4(game_state.board, player, move.point):
                 return move
 
         return None
 
     @staticmethod
     def has_4(board: Board, player: Player, point: Point):
-        if R_Bot.count(board, player, point,
-                       1, 0) + R_Bot.count(board, player, point, -1, 0) == 4:
+        if MCTSBot.count(board, player, point,
+                         1, 0) + MCTSBot.count(board, player, point, -1, 0) == 4:
             return True
 
-        if R_Bot.count(board, player, point,
-                       0, 1) + R_Bot.count(board, player, point, 0, -1) == 4:
+        if MCTSBot.count(board, player, point,
+                         0, 1) + MCTSBot.count(board, player, point, 0, -1) == 4:
             return True
 
-        if R_Bot.count(board, player, point,
-                       -1, -1) + R_Bot.count(board, player, point, 1, 1) == 4:
+        if MCTSBot.count(board, player, point,
+                         -1, -1) + MCTSBot.count(board, player, point, 1, 1) == 4:
             return True
 
-        if R_Bot.count(board, player, point,
-                       1, -1) + R_Bot.count(board, player, point, -1, 1) == 4:
+        if MCTSBot.count(board, player, point,
+                         1, -1) + MCTSBot.count(board, player, point, -1, 1) == 4:
             return True
 
         return False

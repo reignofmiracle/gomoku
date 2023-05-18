@@ -7,7 +7,7 @@ class Move:
         self.point = point
 
     @classmethod
-    def play(cls, point):
+    def play(cls, point: Point):
         return Move(point=point)
 
     def __str__(self):

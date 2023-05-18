@@ -11,7 +11,7 @@ class ScoringTest(unittest.TestCase):
     def test_case_1(self):
         from gomoku.board import Board
         from gomoku.domain import Player, Point
-        from gomoku.game_result import GameResult
+        from gomoku.todo_game_result import GameResult
 
         board = Board(10, 10)
 
@@ -26,7 +26,7 @@ class ScoringTest(unittest.TestCase):
     def test_case_2(self):
         from gomoku.board import Board
         from gomoku.domain import Player, Point
-        from gomoku.game_result import GameResult
+        from gomoku.todo_game_result import GameResult
 
         board = Board(10, 10)
 
@@ -41,7 +41,7 @@ class ScoringTest(unittest.TestCase):
     def test_case_3(self):
         from gomoku.board import Board
         from gomoku.domain import Player, Point
-        from gomoku.game_result import GameResult
+        from gomoku.todo_game_result import GameResult
 
         board = Board(10, 10)
 
@@ -56,7 +56,7 @@ class ScoringTest(unittest.TestCase):
     def test_case_4(self):
         from gomoku.board import Board
         from gomoku.domain import Player, Point
-        from gomoku.game_result import GameResult
+        from gomoku.todo_game_result import GameResult
 
         board = Board(10, 10)
 
