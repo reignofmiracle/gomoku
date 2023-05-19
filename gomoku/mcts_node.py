@@ -27,7 +27,8 @@ class MCTSNode(object):
         return new_node
 
     def record_win(self, winner: Player):
-        self.win_counts[winner] += 1
+        if winner is not None:
+            self.win_counts[winner] += 1
         self.num_rollouts += 1
 
     def can_add_child(self):

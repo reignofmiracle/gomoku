@@ -8,14 +8,12 @@ class GameTest(unittest.TestCase):
     def test_run(self):
         from gomoku.board import Board
         from gomoku.game import Game
+        from gomoku.game_state import GameState
         from gomoku.domain import Player, Point
 
         board = Board(10, 10)
-        board.place_stone(Player.black, Point(2, 2))
-        board.place_stone(Player.white, Point(1, 2))
-        board.place_stone(Player.black, Point(1, 1))
-
-        game = Game(board)
+        game_state = GameState(board, Player.black, None, None)
+        game = Game(game_state)
         game.run()
 
 

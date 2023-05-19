@@ -24,8 +24,6 @@ class MCTSAgent(Agent):
                 node = node.add_child()
 
             winner = self.simulate_random_game(node.game_state)
-            if winner is None:
-                continue
 
             while node is not None:
                 node.record_win(winner)

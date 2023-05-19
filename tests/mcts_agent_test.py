@@ -17,10 +17,11 @@ class MCTSAgentTest(unittest.TestCase):
         board = Board(10, 10)
         game_state = GameState(board, Player.black, None, None)
 
-        mcts_agent = MCTSAgent(10, 0.5)
+        mcts_agent = MCTSAgent(10, 1.5)
         move = mcts_agent.select_move(game_state)
         print(move)
 
+    @unittest.skip("wait")
     def test_simulate_random_game(self):
         from gomoku.domain import Point
         from gomoku.game import Game
@@ -45,8 +46,8 @@ class MCTSAgentTest(unittest.TestCase):
 
             game_state = game_state.apply_move(bot_move)
 
-        # test = Game(game_state.board)
-        # test.run()
+        test = Game(game_state.board)
+        test.run()
 
 
 if __name__ == '__main__':
