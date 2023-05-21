@@ -43,8 +43,6 @@ class GameState:
     def is_over(self):
         if self.board.found_5 is not None:
             return True
-        if self.last_move is None:
-            return False
 
         return self.board.is_full()
 
@@ -102,6 +100,20 @@ class GameState:
                     continue
 
                 for item in move.point.neighbors():
+                    if self.board.get(item) is not None:
+                        moves.append(move)
+
+        return moves
+
+    def more_legal_moves2(self) -> List[Move]:
+        moves = []
+        for row in range(1, self.board.num_rows + 1):
+            for col in range(1, self.board.num_cols + 1):
+                move = Move.play(Point(row, col))
+                if not self.is_valid_move(move):
+                    continue
+
+                for item in move.point.neighbors2():
                     if self.board.get(item) is not None:
                         moves.append(move)
 

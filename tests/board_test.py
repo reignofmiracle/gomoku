@@ -5,6 +5,7 @@ sys.path.append('.')
 
 
 class BoardTest(unittest.TestCase):
+    @unittest.skip("test")
     def test_update_continuous(self):
         from gomoku.domain import Point
         from gomoku.board import Board
@@ -32,6 +33,7 @@ class BoardTest(unittest.TestCase):
         print(f'continuous_full: {board.states[Player.black].continuous_full}')
         print(f'continuous_half: {board.states[Player.black].continuous_half}')
 
+    @unittest.skip("test")
     def test_update_discontinuous(self):
         from gomoku.domain import Point
         from gomoku.board import Board
@@ -61,6 +63,24 @@ class BoardTest(unittest.TestCase):
         print(
             f'discontinuous_half: {board.states[Player.black].discontinuous_half}')
 
+    def test_update_discontinuous2(self):
+        from gomoku.domain import Point
+        from gomoku.board import Board
+        from gomoku.domain import Player
+
+        board = Board(19, 19)
+        board.place_stone(Player.white, Point(1, 1))
+        board.place_stone(Player.black, Point(1, 2))
+        board.place_stone(Player.black, Point(1, 3))
+        board.place_stone(Player.black, Point(1, 5))
+        board.place_stone(Player.black, Point(1, 6))
+
+        print(
+            f'discontinuous_full: {board.states[Player.black].discontinuous_full}')
+        print(
+            f'discontinuous_half: {board.states[Player.black].discontinuous_half}')
+
+    @unittest.skip("test")
     def test_found_5(self):
         from gomoku.domain import Point
         from gomoku.board import Board

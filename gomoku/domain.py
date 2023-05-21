@@ -23,7 +23,7 @@ class Point(namedtuple('Point', 'row, col')):
             Point(self.row + 1, self.col - 1),
             Point(self.row + 1, self.col + 1),
         ]
-    
+
     def neighbors2(self):
         return [
             Point(self.row - 1, self.col),
@@ -42,6 +42,15 @@ class Point(namedtuple('Point', 'row, col')):
             Point(self.row + 2, self.col - 2),
             Point(self.row + 1, self.col + 1),
             Point(self.row + 2, self.col + 2),
+
+            Point(self.row - 2, self.col - 1),
+            Point(self.row - 2, self.col + 1),
+            Point(self.row + 2, self.col - 1),
+            Point(self.row + 2, self.col + 1),
+            Point(self.row - 1, self.col - 2),
+            Point(self.row + 1, self.col - 2),
+            Point(self.row - 1, self.col + 2),
+            Point(self.row + 1, self.col + 2),
         ]
 
     def up(self):

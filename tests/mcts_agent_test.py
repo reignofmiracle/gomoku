@@ -47,7 +47,7 @@ class MCTSAgentTest(unittest.TestCase):
 
             game_state = game_state.apply_move(bot_move)
 
-        test = Game(game_state)
+        test = Game(game_state, MCTSAgent(50, 1.5))
         test.run()
 
 

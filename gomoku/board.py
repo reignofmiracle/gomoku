@@ -68,9 +68,10 @@ class Board:
         self.place_size = self.num_rows * self.num_cols
         self.found_5 = None
 
+        self.keys = [3, 4]
         self.states = {
-            Player.black: BoardState([2, 3, 4]),
-            Player.white: BoardState([2, 3, 4]),
+            Player.black: BoardState(self.keys),
+            Player.white: BoardState(self.keys),
         }
 
     def is_on_grid(self, point: Point) -> bool:
@@ -91,12 +92,9 @@ class Board:
         self.states[player].remove(point)
         self.states[player.other].remove(point)
 
-        self.update_continuous(player, point, 2)
-        self.update_continuous(player, point, 3)
-        self.update_continuous(player, point, 4)
-        self.update_discontinuous(player, point, 2)
-        self.update_discontinuous(player, point, 3)
-        self.update_discontinuous(player, point, 4)
+        for key in self.keys:
+            self.update_continuous(player, point, key)
+            self.update_discontinuous(player, point, key)
 
     def get(self, point: Point) -> Player:
         return self._grid.get(point)
@@ -195,7 +193,7 @@ class Board:
         a = self.count(player, point, ax, ay)
         b = self.count(player, point, bx, by)
 
-        if a[0] + b[0] + 1 == size:
+        if a[0] + b[0] == size:
             if a[1] is not None and b[1] is not None:
                 self.states[player].discontinuous_full[size].append([point])
             elif a[1] is not None:

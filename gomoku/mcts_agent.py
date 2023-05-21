@@ -14,6 +14,10 @@ class MCTSAgent(Agent):
         self.temperature = temperature
 
     def select_move(self, game_state: GameState) -> Move:
+        move = MCTSBot.select_must_move(game_state)
+        if move is not None:
+            return move
+
         root = MCTSNode(game_state)
         for i in range(self.num_rounds):
             node = root
