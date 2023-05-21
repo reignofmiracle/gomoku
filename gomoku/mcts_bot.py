@@ -23,6 +23,22 @@ class MCTSBot(Agent):
         if found is not None:
             return found
 
+         # 나의 4 완성
+        found = MCTSBot.find_4_move_full(game_state, game_state.next_player)
+        if found is not None:
+            return found
+
+        # 상대 4 완성 저지
+        found = MCTSBot.find_4_move_full(
+            game_state, game_state.next_player.other)
+        if found is not None:
+            return found
+
+        moves = [
+            self.find_4_move_half(game_state, game_state.next_player),
+            self.find_4_move_half(game_state, game_state.next_player.other),
+        ]
+
         legal_moves = game_state.legal_moves()
         if len(legal_moves) == 0:
             return None
@@ -31,43 +47,47 @@ class MCTSBot(Agent):
 
     @staticmethod
     def find_5_move(game_state: GameState, player: Player) -> Move | None:
-        for move in game_state.legal_moves():
-            if MCTSBot.has_4(game_state.board, player, move.point):
-                return move
+        if len(game_state.board.states[player].continuous_full[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_full[4])[0])
+
+        if len(game_state.board.states[player].continuous_half[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_half[4])[0])
+
+        if len(game_state.board.states[player].discontinuous_full[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_full[4])[0])
+
+        if len(game_state.board.states[player].discontinuous_half[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_half[4])[0])
 
         return None
 
     @staticmethod
-    def has_4(board: Board, player: Player, point: Point):
-        if MCTSBot.count(board, player, point,
-                         1, 0) + MCTSBot.count(board, player, point, -1, 0) == 4:
-            return True
+    def find_4_move_full(game_state: GameState, player: Player) -> Move | None:
+        if len(game_state.board.states[player].continuous_full[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_full[3])[0])
 
-        if MCTSBot.count(board, player, point,
-                         0, 1) + MCTSBot.count(board, player, point, 0, -1) == 4:
-            return True
+        if len(game_state.board.states[player].discontinuous_full[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_full[3])[0])
 
-        if MCTSBot.count(board, player, point,
-                         -1, -1) + MCTSBot.count(board, player, point, 1, 1) == 4:
-            return True
-
-        if MCTSBot.count(board, player, point,
-                         1, -1) + MCTSBot.count(board, player, point, -1, 1) == 4:
-            return True
-
-        return False
+        return None
 
     @staticmethod
-    def count(board: Board, player: Player, point: Point, d_row: int, d_col: int):
-        count = 0
+    def find_4_move_half(game_state: GameState, player: Player) -> Move | None:
+        if len(game_state.board.states[player].continuous_half[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_half[3])[0])
 
-        point = Point(point.row + d_row, point.col + d_col)
-        while board.is_on_grid(point):
-            if player != board.get(point):
-                break
+        if len(game_state.board.states[player].discontinuous_half[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_half[3])[0])
 
-            count += 1
+        return None
 
-            point = Point(point.row + d_row, point.col + d_col)
+    @staticmethod
+    def find_3_move_full(game_state: GameState, player: Player) -> Move | None:
+        if len(game_state.board.states[player].continuous_full[2]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_full[2])[0])
 
-        return count
+        if len(game_state.board.states[player].discontinuous_full[2]) > 0:
+
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_full[2])[0])
+
+        return None

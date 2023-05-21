@@ -5,6 +5,7 @@ sys.path.append('.')
 
 
 class MCTSAgentTest(unittest.TestCase):
+    @unittest.skip("wait")
     def test_select_move(self):
         from gomoku.domain import Point
         from gomoku.game import Game
@@ -21,7 +22,7 @@ class MCTSAgentTest(unittest.TestCase):
         move = mcts_agent.select_move(game_state)
         print(move)
 
-    @unittest.skip("wait")
+    # @unittest.skip("wait")
     def test_simulate_random_game(self):
         from gomoku.domain import Point
         from gomoku.game import Game
@@ -46,7 +47,7 @@ class MCTSAgentTest(unittest.TestCase):
 
             game_state = game_state.apply_move(bot_move)
 
-        test = Game(game_state.board)
+        test = Game(game_state)
         test.run()
 
 

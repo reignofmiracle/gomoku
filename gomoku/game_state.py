@@ -93,5 +93,19 @@ class GameState:
 
         return moves
 
+    def more_legal_moves(self) -> List[Move]:
+        moves = []
+        for row in range(1, self.board.num_rows + 1):
+            for col in range(1, self.board.num_cols + 1):
+                move = Move.play(Point(row, col))
+                if not self.is_valid_move(move):
+                    continue
+
+                for item in move.point.neighbors():
+                    if self.board.get(item) is not None:
+                        moves.append(move)
+
+        return moves
+
     def winner(self) -> Player | None:
         return self.board.found_5

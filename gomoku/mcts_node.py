@@ -16,7 +16,10 @@ class MCTSNode(object):
         }
         self.num_rollouts = 0
         self.children = []
-        self.unvisited_moves = game_state.legal_moves()
+        if game_state.board.is_empty():
+            self.unvisited_moves = game_state.legal_moves()
+        else:
+            self.unvisited_moves = game_state.more_legal_moves()
 
     def add_child(self):
         index = random.randint(0, len(self.unvisited_moves) - 1)

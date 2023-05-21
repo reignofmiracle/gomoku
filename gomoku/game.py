@@ -17,7 +17,7 @@ class Game:
         self.board_view = BoardView(self.window, self.selected)
         self.board_view.update(self.game_state.board)
 
-        self.mcts_agent = MCTSAgent(100, 1.5)
+        self.mcts_agent = MCTSAgent(200, 1.5)
 
     def run(self):
         self.window.mainloop()
