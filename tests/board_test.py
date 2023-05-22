@@ -30,8 +30,8 @@ class BoardTest(unittest.TestCase):
         board.place_stone(Player.black, Point(4, 4))
         board.place_stone(Player.black, Point(5, 4))
 
-        print(f'continuous_full: {board.states[Player.black].continuous_full}')
-        print(f'continuous_half: {board.states[Player.black].continuous_half}')
+        print(f'continuous_full: {board.states[Player.black].continuous_open}')
+        print(f'continuous_half: {board.states[Player.black].continuous_close}')
 
     @unittest.skip("test")
     def test_update_discontinuous(self):
@@ -59,9 +59,9 @@ class BoardTest(unittest.TestCase):
         board.place_stone(Player.black, Point(6, 4))
 
         print(
-            f'discontinuous_full: {board.states[Player.black].discontinuous_full}')
+            f'discontinuous_full: {board.states[Player.black].discontinuous_open}')
         print(
-            f'discontinuous_half: {board.states[Player.black].discontinuous_half}')
+            f'discontinuous_half: {board.states[Player.black].discontinuous_close}')
 
     def test_update_discontinuous2(self):
         from gomoku.domain import Point
@@ -76,9 +76,9 @@ class BoardTest(unittest.TestCase):
         board.place_stone(Player.black, Point(1, 6))
 
         print(
-            f'discontinuous_full: {board.states[Player.black].discontinuous_full}')
+            f'discontinuous_full: {board.states[Player.black].discontinuous_open}')
         print(
-            f'discontinuous_half: {board.states[Player.black].discontinuous_half}')
+            f'discontinuous_half: {board.states[Player.black].discontinuous_close}')
 
     @unittest.skip("test")
     def test_found_5(self):

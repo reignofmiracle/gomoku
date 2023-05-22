@@ -5,57 +5,57 @@ import gomoku.zobrist as zobrist
 
 class BoardState:
     def __init__(self, keys: List[int]) -> None:
-        self.continuous_full = {}
-        self.continuous_half = {}
+        self.continuous_open = {}
+        self.continuous_close = {}
 
-        self.discontinuous_full = {}
-        self.discontinuous_half = {}
+        self.discontinuous_open = {}
+        self.discontinuous_close = {}
 
         for i in keys:
-            self.continuous_full[i] = []
-            self.continuous_half[i] = []
+            self.continuous_open[i] = []
+            self.continuous_close[i] = []
 
-            self.discontinuous_full[i] = []
-            self.discontinuous_half[i] = []
+            self.discontinuous_open[i] = []
+            self.discontinuous_close[i] = []
 
     def remove(self, point: Point):
-        for k in self.continuous_full:
-            self.continuous_full[k] = [
-                item for item in self.continuous_full[k] if point not in item]
+        for k in self.continuous_open:
+            self.continuous_open[k] = [
+                item for item in self.continuous_open[k] if point not in item]
 
-        for k in self.continuous_half:
-            self.continuous_half[k] = [
-                item for item in self.continuous_half[k] if point not in item]
+        for k in self.continuous_close:
+            self.continuous_close[k] = [
+                item for item in self.continuous_close[k] if point not in item]
 
-        for k in self.discontinuous_full:
-            self.discontinuous_full[k] = [
-                item for item in self.discontinuous_full[k] if point not in item]
+        for k in self.discontinuous_open:
+            self.discontinuous_open[k] = [
+                item for item in self.discontinuous_open[k] if point not in item]
 
-        for k in self.discontinuous_half:
-            self.discontinuous_half[k] = [
-                item for item in self.discontinuous_half[k] if point not in item]
+        for k in self.discontinuous_close:
+            self.discontinuous_close[k] = [
+                item for item in self.discontinuous_close[k] if point not in item]
 
     def remove_continuous_key(self, point: Point, key: int):
-        for k in self.continuous_full:
+        for k in self.continuous_open:
             if k < key:
-                self.continuous_full[k] = [
-                    item for item in self.continuous_full[k] if point not in item]
+                self.continuous_open[k] = [
+                    item for item in self.continuous_open[k] if point not in item]
 
-        for k in self.continuous_half:
+        for k in self.continuous_close:
             if k < key:
-                self.continuous_half[k] = [
-                    item for item in self.continuous_half[k] if point not in item]
+                self.continuous_close[k] = [
+                    item for item in self.continuous_close[k] if point not in item]
 
     def remove_discontinuous_key(self, point: Point, key: int):
-        for k in self.discontinuous_full:
+        for k in self.discontinuous_open:
             if k < key:
-                self.discontinuous_full[k] = [
-                    item for item in self.discontinuous_full[k] if point not in item]
+                self.discontinuous_open[k] = [
+                    item for item in self.discontinuous_open[k] if point not in item]
 
-        for k in self.discontinuous_half:
+        for k in self.discontinuous_close:
             if k < key:
-                self.discontinuous_half[k] = [
-                    item for item in self.discontinuous_half[k] if point not in item]
+                self.discontinuous_close[k] = [
+                    item for item in self.discontinuous_close[k] if point not in item]
 
 
 class Board:
@@ -144,11 +144,11 @@ class Board:
 
         if a[0] + b[0] + 1 == size:
             if a[1] is not None and b[1] is not None:
-                self.states[player].continuous_full[size].append([a[1], b[1]])
+                self.states[player].continuous_open[size].append([a[1], b[1]])
             elif a[1] is not None:
-                self.states[player].continuous_half[size].append([a[1]])
+                self.states[player].continuous_close[size].append([a[1]])
             elif b[1] is not None:
-                self.states[player].continuous_half[size].append([b[1]])
+                self.states[player].continuous_close[size].append([b[1]])
 
     def update_discontinuous(self, player: Player, point: Point, size: int) -> None:
         self.states[player].remove_discontinuous_key(point, size)
@@ -195,11 +195,9 @@ class Board:
 
         if a[0] + b[0] == size:
             if a[1] is not None and b[1] is not None:
-                self.states[player].discontinuous_full[size].append([point])
-            elif a[1] is not None:
-                self.states[player].discontinuous_half[size].append([point])
-            elif b[1] is not None:
-                self.states[player].discontinuous_half[size].append([point])
+                self.states[player].discontinuous_open[size].append([point])
+            else:
+                self.states[player].discontinuous_close[size].append([point])
 
     def count(self, player: Player, point: Point, d_row: int, d_col: int) -> Tuple[int, Point]:
         count = 0

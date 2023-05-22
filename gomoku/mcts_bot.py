@@ -52,36 +52,36 @@ class MCTSBot(Agent):
 
     @staticmethod
     def find_5_move(game_state: GameState, player: Player) -> Move | None:
-        if len(game_state.board.states[player].continuous_full[4]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].continuous_full[4])[0])
+        if len(game_state.board.states[player].continuous_open[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_open[4])[0])
 
-        if len(game_state.board.states[player].continuous_half[4]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].continuous_half[4])[0])
+        if len(game_state.board.states[player].continuous_close[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_close[4])[0])
 
-        if len(game_state.board.states[player].discontinuous_full[4]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].discontinuous_full[4])[0])
+        if len(game_state.board.states[player].discontinuous_open[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_open[4])[0])
 
-        if len(game_state.board.states[player].discontinuous_half[4]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].discontinuous_half[4])[0])
+        if len(game_state.board.states[player].discontinuous_close[4]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_close[4])[0])
 
         return None
 
     @staticmethod
     def find_4_move_full(game_state: GameState, player: Player) -> Move | None:
-        if len(game_state.board.states[player].continuous_full[3]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].continuous_full[3])[0])
+        if len(game_state.board.states[player].continuous_open[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_open[3])[0])
 
-        if len(game_state.board.states[player].discontinuous_full[3]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].discontinuous_full[3])[0])
+        if len(game_state.board.states[player].discontinuous_open[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_open[3])[0])
 
         return None
 
     @staticmethod
     def find_4_move_half(game_state: GameState, player: Player) -> Move | None:
-        if len(game_state.board.states[player].continuous_half[3]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].continuous_half[3])[0])
+        if len(game_state.board.states[player].continuous_close[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].continuous_close[3])[0])
 
-        if len(game_state.board.states[player].discontinuous_half[3]) > 0:
-            return Move.play(random.choice(game_state.board.states[player].discontinuous_half[3])[0])
+        if len(game_state.board.states[player].discontinuous_close[3]) > 0:
+            return Move.play(random.choice(game_state.board.states[player].discontinuous_close[3])[0])
 
         return None
